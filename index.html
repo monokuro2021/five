@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テトロミノ連珠</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>テトロミノ連珠</h1>
+  <div class="header-right">
+    <button id="btn-restart" class="hbtn">もう一度</button>
+  </div>
+</header>
+<main>
+  <section class="board-area">
+    <canvas id="board"></canvas>
+  </section>
+  <aside class="panel">
+    <div class="targets">
+      <div class="target">
+        <div class="target-label you">あなた</div>
+        <canvas id="card-player" width="96" height="122"></canvas>
+        <div class="target-name" id="player-target-name">?</div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="target">
+        <div class="target-label ai">相手</div>
+        <canvas id="card-ai" width="96" height="122"></canvas>
+        <div class="target-name">???</div>
+      </div>
+    </div>
+    <div class="status" id="status">モードを選んでください</div>
+    <div class="panel-section">
+      <div class="section-title">相手のターゲット候補 <span id="cand-count"></span></div>
+      <div id="candidates" class="candidates"></div>
+    </div>
+    <div class="panel-section">
+      <div class="section-title">ログ</div>
+      <div id="log" class="log"></div>
+    </div>
+    <div class="panel-section options" id="ai-options">
+      <label>AIの強さ
+        <select id="difficulty">
+          <option value="easy">やさしい</option>
+          <option value="normal" selected>ふつう</option>
+          <option value="hard">つよい</option>
+        </select>
+      </label>
+    </div>
+  </aside>
+</main>
+
+<div id="overlay">
+  <div class="overlay-inner">
+    <h2 class="title">テトロミノ連珠</h2>
+    <p class="rules">
+      7種類のテトロミノカードから1枚ずつ配られ、それがあなたのターゲットです。<br>
+      交互に盤面へ自分の色の石を1個ずつ置き、<br>
+      先に自分の色でターゲットの形を完成させた方が勝ちです。<br>
+      <span class="rule-note">(回転は有効 / 裏返しは無効 / 余分な石があっても形が含まれればOK)</span><br>
+      相手のターゲットは分かりません。置き方から推理して妨害しましょう。
+    </p>
+
+    <div id="ov-mode">
+      <button class="mbtn" id="btn-vs-ai">コンピュータと対戦</button>
+      <button class="mbtn" id="btn-vs-net">オンライン対戦</button>
+    </div>
+
+    <div id="ov-net" class="hidden">
+      <div id="net-setup">
+        <button class="mbtn" id="btn-host">部屋を作る</button>
+        <div class="join-row">
+          <input id="join-code" maxlength="4" placeholder="コード">
+          <button class="mbtn" id="btn-join">部屋に入る</button>
+        </div>
+      </div>
+      <div id="net-wait" class="hidden">
+        <p>このルームコードを相手に伝えてください:</p>
+        <div id="room-code" class="room-code"></div>
+        <p class="net-msg">相手の接続を待っています…</p>
+      </div>
+      <div id="net-msg" class="net-msg"></div>
+      <button class="hbtn" id="btn-net-back">戻る</button>
+    </div>
+
+    <div id="ov-draw" class="hidden">
+      <p class="draw-prompt">▲ カードを1枚選んでください ▲</p>
+      <div id="draw-cards" class="draw-cards"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
